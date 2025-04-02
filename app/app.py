@@ -19,6 +19,7 @@ while True:
     try:
             id, _ = reader.read()
             if id in ALBUMS.keys():
+                print("Found album")
                 spotify.start_playback(context_uri=ALBUMS[id])
     finally:
             GPIO.cleanup()
