@@ -19,7 +19,7 @@ while True:
     try:
             id, _ = reader.read()
             if id in ALBUMS.keys():
-                spotify.start_playback(context_uri=hm_uri)
+                spotify.start_playback(context_uri=ALBUMS[id])
     finally:
             GPIO.cleanup()
             sleep(10)
