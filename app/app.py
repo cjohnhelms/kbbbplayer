@@ -17,9 +17,12 @@ ALBUMS = {
     584192607192: "spotify:album:7FWCgfnTgupXdyBy51ME9m"
 }
 
+previous = 0
+
 while True:
     try:
             id, _ = reader.read()
+
             if id in ALBUMS.keys() and id != previous:
                 logging.info("Found album")
                 spotify.start_playback(context_uri=ALBUMS[id])
