@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import RPi.GPIO as GPIO
-from mfrc522 import MFRC522
 from mfrc522 import SimpleMFRC522
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
@@ -9,7 +8,7 @@ from time import sleep
 import logging
 from datetime import datetime
 
-reader = MFRC522()
+reader = SimpleMFRC522()
 GPIO.setwarnings(False)
 
 spotify = spotipy.Spotify(auth_manager=SpotifyOAuth(scope="user-modify-playback-state"))
