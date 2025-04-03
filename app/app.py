@@ -18,26 +18,13 @@ ALBUMS = {
     584192607192: "spotify:album:7FWCgfnTgupXdyBy51ME9m"
 }
 
-try:
-    while True:
-        status, _ = reader.MFRC522_Request(reader.PICC_REQIDL)
-        if status != reader.MI_OK:
-            sleep(0.1)
-            continue
-        status, backData = reader.MFRC522_Anticoll()
-        buf = reader.MFRC522_Read(0)
-        reader.MFRC522_Request(reader.PICC_HALT)
-        if buf:
-            print(datetime.now().isoformat(), ':'.join([hex(x) for x in buf]))
-finally:
-        GPIO.cleanup()
-
-##while True:
-##    try:
-##            id, _ = reader.read()
-##            if id in ALBUMS.keys():
-##                logging.info("Found album")
-##                spotify.start_playback(context_uri=ALBUMS[id])
-##    finally:
-##            GPIO.cleanup()
-##            sleep(10)
+while True:
+    try:
+            id, _ = reader.read()
+            previous = id
+            if id in ALBUMS.keys() and id != previous:
+                logging.info("Found album")
+                spotify.start_playback(context_uri=ALBUMS[id])
+    finally:
+            GPIO.cleanup()
+            sleep(10)
