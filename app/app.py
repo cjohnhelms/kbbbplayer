@@ -20,10 +20,10 @@ ALBUMS = {
 while True:
     try:
             id, _ = reader.read()
-            previous = id
             if id in ALBUMS.keys() and id != previous:
                 logging.info("Found album")
                 spotify.start_playback(context_uri=ALBUMS[id])
+                previous = id
     finally:
             GPIO.cleanup()
             sleep(10)
