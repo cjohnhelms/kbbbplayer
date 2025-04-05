@@ -8,7 +8,7 @@ from time import sleep
 import logging
 
 ALBUMS = {
-    "1364151195216": "spotify:album:7FWCgfnTgupXdyBy51ME9m"
+    584192607192: "spotify:album:7FWCgfnTgupXdyBy51ME9m"
 }
 APPLE_TV_ID = "6F2A5C54-CEB8-430F-A6B3-7E31DCE85846"
 
