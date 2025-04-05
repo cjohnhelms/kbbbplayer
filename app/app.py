@@ -35,6 +35,7 @@ try:
             logging.info("Album found")
             spotify.transfer_playback(APPLE_TV_ID, False)
             spotify.start_playback(APPLE_TV_ID, context_uri=ALBUMS[id])
+            previous = id
         else:
             print("No tag detected.")
             no_tag += 1
