@@ -24,7 +24,7 @@ try:
     print("Place your RFID tag on the reader...")
     
     while True:
-        print(f"no_tag: {no_tag}")
+
         if no_tag >= 3:
             spotify.pause_playback(APPLE_TV_ID)
 
@@ -39,7 +39,6 @@ try:
             spotify.start_playback(APPLE_TV_ID, context_uri=ALBUMS[id])
             previous = id
         else:
-            print("No tag detected.")
             no_tag += 1
         
         sleep(1)  # Wait a bit before checking again
