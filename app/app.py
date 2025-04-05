@@ -18,7 +18,7 @@ previous = 0
 no_tag = 0
 
 GPIO.setwarnings(False)
-spotify = spotipy.Spotify(auth_manager=SpotifyOAuth(scope="user-modify-playback-state,user-read-playback-state,user-read-currently-playing"))
+spotify = spotipy.Spotify(auth_manager=SpotifyOAuth(scope="user-modify-playback-state"))
 
 reader = SimpleMFRC522()
 
