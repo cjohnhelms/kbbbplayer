@@ -31,7 +31,6 @@ try:
 
         if no_tag >= 3:
             spotify.pause_playback(APPLE_TV_ID)
-            previous = 0
 
         id, _ = reader.read_no_block()  # Non-blocking read
 
