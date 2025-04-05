@@ -7,6 +7,8 @@ from spotipy.oauth2 import SpotifyOAuth
 from time import sleep
 import logging
 
+logging.basicConfig(level = logging.INFO)
+
 ALBUMS = {
     584192607192: "spotify:album:7FWCgfnTgupXdyBy51ME9m"
 }
