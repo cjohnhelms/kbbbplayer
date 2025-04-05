@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import RPi.GPIO as GPIO
-from mfrc522 import SimpleMFRC522
+from mfrc522 import SimpleMFRC522, MFRC522
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from time import sleep
@@ -38,14 +38,30 @@ reader = MFRC522()
 
 try:
     while True:
-        status, _ = reader.MFRC522_Request(reader.PICC_REQIDL)
-        if status != reader.MI_OK:
-            sleep(0.1)
-            continue
-        status, backData = reader.MFRC522_Anticoll()
-        buf = reader.MFRC522_Read(0)
-        reader.MFRC522_Request(reader.PICC_HALT)
-        if buf:
-            print(datetime.now().isoformat(), ':'.join([hex(x) for x in buf]))
-finally:
-        GPIO.cleanup()
+        # Scan for tags
+        (status, TagType) = reader.MFRC522_Request(reader.PICC_REQIDL)
+
+        # If a tag is found
+        if status == reader.MI_OK:
+            print("Tag detected")
+
+            # Get the UID of the tag
+            (status, uid) = reader.MFRC522_Anticoll()
+
+            # If the UID is successfully obtained
+            if status == reader.MI_OK:
+                print("UID: " + ":".join([str(x) for x in uid]))
+
+                # Select the tag
+                reader.MFRC522_SelectTag(uid)
+
+                # Read data from the tag
+                data = [elem for index in [6] for elem in reader.MFRC522_Read(index)]
+                result = ''.join([chr(charcode) for charcode in data])
+                print("Data read:", result)
+            else:
+                print("Error obtaining UID")
+
+except KeyboardInterrupt:
+    print("Exiting...")
+    reader.MFRC522_StopCrypto1()
