@@ -35,11 +35,14 @@ try:
 
         id, _ = reader.read_no_block()  # Non-blocking read
 
-        if id and id in ALBUMS.keys() and id != previous:  # Tag detected
+        if id and id in ALBUMS.keys():
             logging.info("Album found")
-            spotify.transfer_playback(APPLE_TV_ID, False)
-            spotify.start_playback(APPLE_TV_ID, context_uri=ALBUMS[id])
-            previous = id
+            if id == previous:
+                spotify.start_playback()
+            else:
+                spotify.transfer_playback(APPLE_TV_ID, False)
+                spotify.start_playback(APPLE_TV_ID, context_uri=ALBUMS[id])
+                previous = id
         else:
             no_tag += 1
 
