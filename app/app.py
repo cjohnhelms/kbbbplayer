@@ -40,6 +40,7 @@ try:
 
         # If a tag is found
         if status == reader.MI_OK:
+            logging.info("Album detected")
             # Get the UID of the tag
             (status, uid) = reader.MFRC522_Anticoll()
             # If the UID is successfully obtained
@@ -50,7 +51,10 @@ try:
                     spotify.start_playback(context_uri=ALBUMS[id])
                     previous = id
         else:
+            logging.info("Album removed")
             spotify.pause_playback(APPLE_TV_ID)
+        
+        sleep(2)
 
 except KeyboardInterrupt:
     print("Exiting...")
