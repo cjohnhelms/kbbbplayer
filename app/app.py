@@ -25,7 +25,7 @@ try:
     
     while True:
         print(f"no_tag: {no_tag}")
-        if no_tag >= 5:
+        if no_tag >= 3:
             spotify.pause_playback(APPLE_TV_ID)
 
         id, _ = reader.read_no_block()  # Non-blocking read
