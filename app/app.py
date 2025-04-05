@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import RPi.GPIO as GPIO
-from mfrc522 import SimpleMFRC522, MFRC522
+from mfrc522 import MFRC522
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from time import sleep
@@ -35,9 +35,9 @@ try:
                     spotify.transfer_playback(APPLE_TV_ID, False)
                     spotify.start_playback(context_uri=ALBUMS[id])
                     previous = id
-            else:
-                logging.info("Album removed")
-                spotify.pause_playback(APPLE_TV_ID)
+        else:
+            logging.info("Album removed")
+            spotify.pause_playback(APPLE_TV_ID)
         
         sleep(2)
 
