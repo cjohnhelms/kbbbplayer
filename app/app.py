@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import RPi.GPIO as GPIO
-from mfrc522 import MFRC522
+from mfrc522 import SimpleMFRC522
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from time import sleep
@@ -15,32 +15,28 @@ APPLE_TV_ID = "6F2A5C54-CEB8-430F-A6B3-7E31DCE85846"
 previous = 0
 
 GPIO.setwarnings(False)
-reader = MFRC522()
 spotify = spotipy.Spotify(auth_manager=SpotifyOAuth(scope="user-modify-playback-state"))
 
-try:
-    while True:
-        # Scan for tags
-        (status, TagType) = reader.MFRC522_Request(reader.PICC_REQIDL)
+reader = SimpleMFRC522()
 
-        # If a tag is found
-        if status == reader.MI_OK:
-            logging.info("Album detected")
-            # Get the UID of the tag
-            (status, uid) = reader.MFRC522_Anticoll()
-            # If the UID is successfully obtained
-            if status == reader.MI_OK:
-                id = "".join([str(x) for x in uid])
-                if id in ALBUMS.keys() and id != previous:
-                    spotify.transfer_playback(APPLE_TV_ID, False)
-                    spotify.start_playback(context_uri=ALBUMS[id])
-                    previous = id
+try:
+    print("Place your RFID tag on the reader...")
+    
+    while True:
+        id, _ = reader.read_no_block()  # Non-blocking read
+
+        if id:
+            print(id)
+        
+        if id and id in ALBUMS.keys() and id != previous:  # Tag detected
+            logging.info("Album found")
+            spotify.transfer_playback(APPLE_TV_ID, False)
+            spotify.start_playback(APPLE_TV_ID, context_uri=ALBUMS[id])
         else:
-            logging.info("Album removed")
+            print("No tag detected.")
             spotify.pause_playback(APPLE_TV_ID)
         
-        sleep(2)
+        sleep(1)  # Wait a bit before checking again
 
 except KeyboardInterrupt:
-    print("Exiting...")
-    reader.MFRC522_StopCrypto1()
+    print("Program terminated.")
