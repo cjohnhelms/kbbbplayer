@@ -25,12 +25,15 @@ try:
     
     while True:
 
+        logging.info(f"no tag check: {no_tag}")
+
         if no_tag >= 3:
             spotify.pause_playback(APPLE_TV_ID)
 
         id, _ = reader.read_no_block()  # Non-blocking read
 
         if id:
+            logging.info("tag detected")
             no_tag = 0
 
         if id and id in ALBUMS.keys() and id != previous:  # Tag detected
