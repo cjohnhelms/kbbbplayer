@@ -14,8 +14,8 @@ APPLE_TV_ID = "6F2A5C54-CEB8-430F-A6B3-7E31DCE85846"
 
 previous = 0
 
-reader = MFRC522()
 GPIO.setwarnings(False)
+reader = MFRC522()
 spotify = spotipy.Spotify(auth_manager=SpotifyOAuth(scope="user-modify-playback-state"))
 
 try:
