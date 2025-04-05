@@ -35,9 +35,9 @@ try:
                     spotify.transfer_playback(APPLE_TV_ID, False)
                     spotify.start_playback(context_uri=ALBUMS[id])
                     previous = id
-        else:
-            logging.info("Album removed")
-            spotify.pause_playback(APPLE_TV_ID)
+            else:
+                logging.info("Album removed")
+                spotify.pause_playback(APPLE_TV_ID)
         
         sleep(2)
 
