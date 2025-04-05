@@ -13,6 +13,7 @@ ALBUMS = {
 APPLE_TV_ID = "6F2A5C54-CEB8-430F-A6B3-7E31DCE85846"
 
 previous = 0
+no_tag = 0
 
 GPIO.setwarnings(False)
 spotify = spotipy.Spotify(auth_manager=SpotifyOAuth(scope="user-modify-playback-state"))
@@ -23,18 +24,20 @@ try:
     print("Place your RFID tag on the reader...")
     
     while True:
+        print(f"no_tag: {no_tag}")
+        if no_tag >= 5:
+            spotify.pause_playback(APPLE_TV_ID)
+
         id, _ = reader.read_no_block()  # Non-blocking read
 
-        if id:
-            print(id)
-        
         if id and id in ALBUMS.keys() and id != previous:  # Tag detected
+            no_tag = 0
             logging.info("Album found")
             spotify.transfer_playback(APPLE_TV_ID, False)
             spotify.start_playback(APPLE_TV_ID, context_uri=ALBUMS[id])
         else:
             print("No tag detected.")
-            spotify.pause_playback(APPLE_TV_ID)
+            no_tag += 1
         
         sleep(1)  # Wait a bit before checking again
 
