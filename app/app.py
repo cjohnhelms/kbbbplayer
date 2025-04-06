@@ -29,7 +29,7 @@ try:
 
         logging.info(f"no tag check: {no_tag}")
 
-        if no_tag >= 3:
+        if no_tag == 3:
             spotify.pause_playback(APPLE_TV_ID)
 
         id, _ = reader.read_no_block()  # Non-blocking read
