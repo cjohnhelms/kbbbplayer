@@ -49,7 +49,7 @@ try:
             logging.info("tag detected")
             no_tag = 0
         
-        sleep(1)  # Wait a bit before checking again
+        sleep(.5)  # Wait a bit before checking again
 
 except KeyboardInterrupt:
     print("Program terminated.")
