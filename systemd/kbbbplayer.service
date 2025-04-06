@@ -1,0 +1,13 @@
+[Unit]
+Description=kbbbplayer for a modern vinyl experience
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+ExecStart=python /home/cjohnhelms/kbbbplayer/app/app.py
+
+[Install]
+WantedBy=graphical.target
